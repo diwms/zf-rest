@@ -348,6 +348,9 @@ class RestController extends AbstractRestfulController
 
         // Use content negotiation for creating the view model
         $viewModel = new ContentNegotiationViewModel(array('payload' => $return));
+
+        $viewModel->setTerminal(true);
+
         $e->setResult($viewModel);
 
         return $viewModel;
