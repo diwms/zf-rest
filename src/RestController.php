@@ -19,6 +19,7 @@ use ZF\ApiProblem\Exception\DomainException;
 use ZF\ContentNegotiation\ViewModel as ContentNegotiationViewModel;
 use ZF\Hal\Collection as HalCollection;
 use ZF\Hal\Entity as HalEntity;
+use Zend\View\Model\ViewModel;
 
 /**
  * Controller for handling resources.
@@ -349,7 +350,9 @@ class RestController extends AbstractRestfulController
         // Use content negotiation for creating the view model
         $viewModel = new ContentNegotiationViewModel(array('payload' => $return));
 
-        $viewModel->setTerminal(true);
+        if (isset($return->entity) && $return->entity instanceof ViewModel) {
+            $viewModel = $return->entity;
+        }
 
         $e->setResult($viewModel);
 
