@@ -350,8 +350,10 @@ class RestController extends AbstractRestfulController
         // Use content negotiation for creating the view model
         $viewModel = new ContentNegotiationViewModel(array('payload' => $return));
 
-        if ($return->entity instanceof ViewModel) {
-            $viewModel = $return->entity;
+        if (!$return instanceof HalCollection) {
+            if ($return->entity instanceof ViewModel) {
+                $viewModel = $return->entity;
+            }
         }
 
         $e->setResult($viewModel);
